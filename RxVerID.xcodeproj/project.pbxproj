@@ -1,0 +1,525 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3B502B072386D270007035C9 /* RxVerID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B502AFD2386D270007035C9 /* RxVerID.framework */; };
+		3B502B0C2386D270007035C9 /* RxVerIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B502B0B2386D270007035C9 /* RxVerIDTests.swift */; };
+		3B502B0E2386D270007035C9 /* RxVerID.h in Headers */ = {isa = PBXBuildFile; fileRef = 3B502B002386D270007035C9 /* RxVerID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3B502B182386D291007035C9 /* RxVerID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B502B172386D291007035C9 /* RxVerID.swift */; };
+		3B502B1A2386D2B7007035C9 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 3B502B192386D2B7007035C9 /* Podfile */; };
+		E992D14E884AFD09A80F566D /* libPods-RxVerID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 071075C76D03FF97083026C7 /* libPods-RxVerID.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3B502B082386D270007035C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3B502AF42386D270007035C9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3B502AFC2386D270007035C9;
+			remoteInfo = RxVerID;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		071075C76D03FF97083026C7 /* libPods-RxVerID.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RxVerID.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B502AFD2386D270007035C9 /* RxVerID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxVerID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B502B002386D270007035C9 /* RxVerID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxVerID.h; sourceTree = "<group>"; };
+		3B502B012386D270007035C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3B502B062386D270007035C9 /* RxVerIDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxVerIDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B502B0B2386D270007035C9 /* RxVerIDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxVerIDTests.swift; sourceTree = "<group>"; };
+		3B502B0D2386D270007035C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3B502B172386D291007035C9 /* RxVerID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxVerID.swift; sourceTree = "<group>"; };
+		3B502B192386D2B7007035C9 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		456CFA099DB94BF85C9ABAD0 /* Pods-RxVerID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxVerID.debug.xcconfig"; path = "Target Support Files/Pods-RxVerID/Pods-RxVerID.debug.xcconfig"; sourceTree = "<group>"; };
+		7A054A538BF69AA28FFDDEC1 /* Pods-RxVerID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxVerID.release.xcconfig"; path = "Target Support Files/Pods-RxVerID/Pods-RxVerID.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3B502AFA2386D270007035C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E992D14E884AFD09A80F566D /* libPods-RxVerID.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3B502B032386D270007035C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B502B072386D270007035C9 /* RxVerID.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3B502AF32386D270007035C9 = {
+			isa = PBXGroup;
+			children = (
+				3B502B192386D2B7007035C9 /* Podfile */,
+				3B502AFF2386D270007035C9 /* RxVerID */,
+				3B502B0A2386D270007035C9 /* RxVerIDTests */,
+				3B502AFE2386D270007035C9 /* Products */,
+				CD051F8F4B9F7741C553EEBD /* Pods */,
+				80886624AA4B65DB09D7F478 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		3B502AFE2386D270007035C9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3B502AFD2386D270007035C9 /* RxVerID.framework */,
+				3B502B062386D270007035C9 /* RxVerIDTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3B502AFF2386D270007035C9 /* RxVerID */ = {
+			isa = PBXGroup;
+			children = (
+				3B502B172386D291007035C9 /* RxVerID.swift */,
+				3B502B002386D270007035C9 /* RxVerID.h */,
+				3B502B012386D270007035C9 /* Info.plist */,
+			);
+			path = RxVerID;
+			sourceTree = "<group>";
+		};
+		3B502B0A2386D270007035C9 /* RxVerIDTests */ = {
+			isa = PBXGroup;
+			children = (
+				3B502B0B2386D270007035C9 /* RxVerIDTests.swift */,
+				3B502B0D2386D270007035C9 /* Info.plist */,
+			);
+			path = RxVerIDTests;
+			sourceTree = "<group>";
+		};
+		80886624AA4B65DB09D7F478 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				071075C76D03FF97083026C7 /* libPods-RxVerID.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CD051F8F4B9F7741C553EEBD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				456CFA099DB94BF85C9ABAD0 /* Pods-RxVerID.debug.xcconfig */,
+				7A054A538BF69AA28FFDDEC1 /* Pods-RxVerID.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3B502AF82386D270007035C9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B502B0E2386D270007035C9 /* RxVerID.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3B502AFC2386D270007035C9 /* RxVerID */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3B502B112386D270007035C9 /* Build configuration list for PBXNativeTarget "RxVerID" */;
+			buildPhases = (
+				378F84492A2F33E6587AC3FD /* [CP] Check Pods Manifest.lock */,
+				3B502AF82386D270007035C9 /* Headers */,
+				3B502AF92386D270007035C9 /* Sources */,
+				3B502AFA2386D270007035C9 /* Frameworks */,
+				3B502AFB2386D270007035C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RxVerID;
+			productName = RxVerID;
+			productReference = 3B502AFD2386D270007035C9 /* RxVerID.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		3B502B052386D270007035C9 /* RxVerIDTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3B502B142386D270007035C9 /* Build configuration list for PBXNativeTarget "RxVerIDTests" */;
+			buildPhases = (
+				3B502B022386D270007035C9 /* Sources */,
+				3B502B032386D270007035C9 /* Frameworks */,
+				3B502B042386D270007035C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3B502B092386D270007035C9 /* PBXTargetDependency */,
+			);
+			name = RxVerIDTests;
+			productName = RxVerIDTests;
+			productReference = 3B502B062386D270007035C9 /* RxVerIDTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3B502AF42386D270007035C9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1120;
+				LastUpgradeCheck = 1120;
+				ORGANIZATIONNAME = "Applied Recognition Inc.";
+				TargetAttributes = {
+					3B502AFC2386D270007035C9 = {
+						CreatedOnToolsVersion = 11.2.1;
+						LastSwiftMigration = 1120;
+					};
+					3B502B052386D270007035C9 = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 3B502AF72386D270007035C9 /* Build configuration list for PBXProject "RxVerID" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3B502AF32386D270007035C9;
+			productRefGroup = 3B502AFE2386D270007035C9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3B502AFC2386D270007035C9 /* RxVerID */,
+				3B502B052386D270007035C9 /* RxVerIDTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3B502AFB2386D270007035C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B502B1A2386D2B7007035C9 /* Podfile in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3B502B042386D270007035C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		378F84492A2F33E6587AC3FD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RxVerID-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3B502AF92386D270007035C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B502B182386D291007035C9 /* RxVerID.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3B502B022386D270007035C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B502B0C2386D270007035C9 /* RxVerIDTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3B502B092386D270007035C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3B502AFC2386D270007035C9 /* RxVerID */;
+			targetProxy = 3B502B082386D270007035C9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		3B502B0F2386D270007035C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		3B502B102386D270007035C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		3B502B122386D270007035C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 456CFA099DB94BF85C9ABAD0 /* Pods-RxVerID.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 3DPTJHF24M;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = RxVerID/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.appliedrec.RxVerID;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3B502B132386D270007035C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A054A538BF69AA28FFDDEC1 /* Pods-RxVerID.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 3DPTJHF24M;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = RxVerID/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.appliedrec.RxVerID;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3B502B152386D270007035C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3DPTJHF24M;
+				INFOPLIST_FILE = RxVerIDTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.appliedrec.RxVerIDTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3B502B162386D270007035C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3DPTJHF24M;
+				INFOPLIST_FILE = RxVerIDTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.appliedrec.RxVerIDTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3B502AF72386D270007035C9 /* Build configuration list for PBXProject "RxVerID" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B502B0F2386D270007035C9 /* Debug */,
+				3B502B102386D270007035C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3B502B112386D270007035C9 /* Build configuration list for PBXNativeTarget "RxVerID" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B502B122386D270007035C9 /* Debug */,
+				3B502B132386D270007035C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3B502B142386D270007035C9 /* Build configuration list for PBXNativeTarget "RxVerIDTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B502B152386D270007035C9 /* Debug */,
+				3B502B162386D270007035C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3B502AF42386D270007035C9 /* Project object */;
+}

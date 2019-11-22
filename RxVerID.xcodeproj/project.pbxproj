@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0262AE0F6DA7C109976F59DD /* Pods_RxVerID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 303E0C59F2248EE2FFF18E47 /* Pods_RxVerID.framework */; };
 		3B502B072386D270007035C9 /* RxVerID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B502AFD2386D270007035C9 /* RxVerID.framework */; };
 		3B502B0C2386D270007035C9 /* RxVerIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B502B0B2386D270007035C9 /* RxVerIDTests.swift */; };
 		3B502B0E2386D270007035C9 /* RxVerID.h in Headers */ = {isa = PBXBuildFile; fileRef = 3B502B002386D270007035C9 /* RxVerID.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3B502B182386D291007035C9 /* RxVerID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B502B172386D291007035C9 /* RxVerID.swift */; };
 		3B502B1A2386D2B7007035C9 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 3B502B192386D2B7007035C9 /* Podfile */; };
-		E992D14E884AFD09A80F566D /* libPods-RxVerID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 071075C76D03FF97083026C7 /* libPods-RxVerID.a */; };
+		87DF5272097ED69AB03E6527 /* Pods_RxVerIDTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F487B010F7D076F4DA3E4AA4 /* Pods_RxVerIDTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,7 +27,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		071075C76D03FF97083026C7 /* libPods-RxVerID.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RxVerID.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E9FF41291583675EDEDEA2D /* Pods-RxVerIDTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxVerIDTests.release.xcconfig"; path = "Target Support Files/Pods-RxVerIDTests/Pods-RxVerIDTests.release.xcconfig"; sourceTree = "<group>"; };
+		303E0C59F2248EE2FFF18E47 /* Pods_RxVerID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxVerID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B502AFD2386D270007035C9 /* RxVerID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxVerID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B502B002386D270007035C9 /* RxVerID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxVerID.h; sourceTree = "<group>"; };
 		3B502B012386D270007035C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -34,9 +36,11 @@
 		3B502B0B2386D270007035C9 /* RxVerIDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxVerIDTests.swift; sourceTree = "<group>"; };
 		3B502B0D2386D270007035C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B502B172386D291007035C9 /* RxVerID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxVerID.swift; sourceTree = "<group>"; };
-		3B502B192386D2B7007035C9 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		3B502B192386D2B7007035C9 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		456CFA099DB94BF85C9ABAD0 /* Pods-RxVerID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxVerID.debug.xcconfig"; path = "Target Support Files/Pods-RxVerID/Pods-RxVerID.debug.xcconfig"; sourceTree = "<group>"; };
 		7A054A538BF69AA28FFDDEC1 /* Pods-RxVerID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxVerID.release.xcconfig"; path = "Target Support Files/Pods-RxVerID/Pods-RxVerID.release.xcconfig"; sourceTree = "<group>"; };
+		928B70B904FAE658DDB34D7C /* Pods-RxVerIDTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxVerIDTests.debug.xcconfig"; path = "Target Support Files/Pods-RxVerIDTests/Pods-RxVerIDTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F487B010F7D076F4DA3E4AA4 /* Pods_RxVerIDTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxVerIDTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E992D14E884AFD09A80F566D /* libPods-RxVerID.a in Frameworks */,
+				0262AE0F6DA7C109976F59DD /* Pods_RxVerID.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +57,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B502B072386D270007035C9 /* RxVerID.framework in Frameworks */,
+				87DF5272097ED69AB03E6527 /* Pods_RxVerIDTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,7 +107,8 @@
 		80886624AA4B65DB09D7F478 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				071075C76D03FF97083026C7 /* libPods-RxVerID.a */,
+				303E0C59F2248EE2FFF18E47 /* Pods_RxVerID.framework */,
+				F487B010F7D076F4DA3E4AA4 /* Pods_RxVerIDTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -112,6 +118,8 @@
 			children = (
 				456CFA099DB94BF85C9ABAD0 /* Pods-RxVerID.debug.xcconfig */,
 				7A054A538BF69AA28FFDDEC1 /* Pods-RxVerID.release.xcconfig */,
+				928B70B904FAE658DDB34D7C /* Pods-RxVerIDTests.debug.xcconfig */,
+				1E9FF41291583675EDEDEA2D /* Pods-RxVerIDTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -153,9 +161,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3B502B142386D270007035C9 /* Build configuration list for PBXNativeTarget "RxVerIDTests" */;
 			buildPhases = (
+				B276EABDCED9CFB1AC68B59A /* [CP] Check Pods Manifest.lock */,
 				3B502B022386D270007035C9 /* Sources */,
 				3B502B032386D270007035C9 /* Frameworks */,
 				3B502B042386D270007035C9 /* Resources */,
+				70EA58DA8489186B3448E18F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -240,6 +250,45 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-RxVerID-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		70EA58DA8489186B3448E18F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RxVerIDTests/Pods-RxVerIDTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RxVerIDTests/Pods-RxVerIDTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RxVerIDTests/Pods-RxVerIDTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B276EABDCED9CFB1AC68B59A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RxVerIDTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -453,6 +502,7 @@
 		};
 		3B502B152386D270007035C9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 928B70B904FAE658DDB34D7C /* Pods-RxVerIDTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -472,6 +522,7 @@
 		};
 		3B502B162386D270007035C9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1E9FF41291583675EDEDEA2D /* Pods-RxVerIDTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

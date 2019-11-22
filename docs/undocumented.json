@@ -1,0 +1,12 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/jakub/Applied-Recognition/RxVerID/RxVerID/RxVerID.swift",
+      "line": 704,
+      "symbol": "ImageError",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/jakub/Applied-Recognition/RxVerID"
+}

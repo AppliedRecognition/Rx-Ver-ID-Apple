@@ -1,0 +1,14 @@
+clean: true
+sdk: iphonesimulator
+xcodebuild_arguments:
+ - -workspace
+ - RxVerID.xcworkspace
+ - -scheme
+ - RxVerID
+ - -sdk
+ - iphonesimulator
+author: Applied Recognition, Inc.
+module: RxVerID
+min_acl: public
+skip_undocumented: true
+hide_documentation_coverage: true

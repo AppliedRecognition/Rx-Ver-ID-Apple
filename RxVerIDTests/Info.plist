@@ -18,5 +18,7 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>com.appliedrec.verid.apiSecret</key>
+	<string>91e7b414ad951fdeeb07d3ae3a5baa80463439784677fe1e0f69b92755fadacc</string>
 </dict>
 </plist>

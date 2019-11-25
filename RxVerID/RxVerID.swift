@@ -35,6 +35,7 @@ public class RxVerID: VerIDSessionDelegate {
         return Single.create { single in
             self.veridSemaphore.wait()
             if let verid = self.veridInstance {
+                self.veridSemaphore.signal()
                 single(.success(verid))
             } else {
                 let factory = VerIDFactory()
@@ -42,13 +43,15 @@ public class RxVerID: VerIDSessionDelegate {
                 factory.faceRecognitionFactory = self.faceRecognitionFactory
                 factory.userManagementFactory = self.userManagementFactory
                 do {
-                    self.veridInstance = try factory.createVerIDSync()
-                    single(.success(self.veridInstance!))
+                    let verid = try factory.createVerIDSync()
+                    self.veridInstance = verid
+                    self.veridSemaphore.signal()
+                    single(.success(verid))
                 } catch {
+                    self.veridSemaphore.signal()
                     single(.error(error))
                 }
             }
-            self.veridSemaphore.signal()
             return Disposables.create()
         }
     }
@@ -159,7 +162,9 @@ public class RxVerID: VerIDSessionDelegate {
     /// - Since: 1.0.0
     public func detectRecognizableFacesInImage(_ image: VerIDImage, limit: Int) -> Observable<RecognizableFace> {
         return self.verid.asObservable().flatMap { verid in
-            return self.detectRecognizableFacesInImage(image, limit: limit)
+            return self.detectFacesInImage(image, limit: limit).flatMap { face in
+                return self.createRecognizableFaceFromFace(face, image: image)
+            }
         }
     }
     

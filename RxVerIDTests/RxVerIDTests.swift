@@ -223,7 +223,7 @@ class RxVerIDTests: XCTestCase {
     
     func test_compareFaceToFace_returnsScore() {
         let expectation = XCTestExpectation(description: "Compare face to face")
-        let disposable = self.testFaces(userId: 1).toArray()
+        let disposable = self.facesOfUser(1).toArray()
             .flatMap { faces in
                 return self.rxVerID.compareFace(faces.first!, toFaces: [faces.last!])
             }.subscribe(onSuccess: { score in
@@ -241,7 +241,7 @@ class RxVerIDTests: XCTestCase {
     func test_assignFaceToUser_succeeds() {
         let expectation = XCTestExpectation(description: "Assign face to user")
         let userId = "test"
-        let disposable = self.testFaces(userId: 1)
+        let disposable = self.facesOfUser(1)
             .flatMap { face in
                 return self.rxVerID.assignFace(face, toUser: userId)
             }
@@ -266,7 +266,7 @@ class RxVerIDTests: XCTestCase {
     func test_assignFacesToUser_succeeds() {
         let expectation = XCTestExpectation(description: "Assign face to user")
         let userId = "test"
-        let disposable = self.testFaces(userId: 1).toArray().flatMapCompletable{ faces in
+        let disposable = self.facesOfUser(1).toArray().flatMapCompletable{ faces in
                 return self.rxVerID.assignFaces(faces, toUser: userId)
             }
             .andThen(self.rxVerID.users)
@@ -289,7 +289,7 @@ class RxVerIDTests: XCTestCase {
     func test_deleteUser_succeeds() {
         let expectation = XCTestExpectation(description: "Delete user")
         let userId = "test"
-        let disposable = self.testFaces(userId: 1).toArray().flatMapCompletable { faces in
+        let disposable = self.facesOfUser(1).toArray().flatMapCompletable { faces in
                 return self.rxVerID.assignFaces(faces, toUser: userId)
             }
             .andThen(self.rxVerID.users)
@@ -319,7 +319,7 @@ class RxVerIDTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Get users")
         let userId = "test"
         var userNumber = 0
-        let disposable = self.testFaces(userId: 1).flatMap { face -> Completable in
+        let disposable = self.facesOfUser(1).flatMap { face -> Completable in
                 userNumber += 1
                 return self.rxVerID.assignFace(face, toUser: "\(userId)_\(userNumber)")
             }
@@ -349,7 +349,7 @@ class RxVerIDTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Get users")
         let userId = "test"
         var faceCount = 0
-        let disposable = self.testFaces(userId: 1).flatMap { face -> Completable in
+        let disposable = self.facesOfUser(1).flatMap { face -> Completable in
                 faceCount += 1
                 return self.rxVerID.assignFace(face, toUser: userId)
             }
@@ -372,11 +372,11 @@ class RxVerIDTests: XCTestCase {
     func test_authenticateUserInFace_succeeds() {
         let expectation = XCTestExpectation(description: "Authenticate user")
         let userId = "test"
-        let disposable = self.testFaces(userId: 1).take(1).single().flatMap { face -> Completable in
+        let disposable = self.facesOfUser(1).take(1).single().flatMap { face -> Completable in
                 return self.rxVerID.assignFace(face, toUser: userId)
             }
             .ignoreElements()
-            .andThen(self.testFaces(userId: 1).takeLast(1).single().flatMap { face in
+            .andThen(self.facesOfUser(1).takeLast(1).single().flatMap { face in
                 return self.rxVerID.authenticateUser(userId, inFace: face)
             })
             .single()
@@ -392,12 +392,209 @@ class RxVerIDTests: XCTestCase {
     }
     
     func test_authenticateUserInImageURL_succeeds() {
-        
+        let expectation = XCTestExpectation(description: "Authenticate user")
+        let userId = "test"
+        let disposable = self.facesOfUser(1).take(1).single().flatMap { face -> Completable in
+                return self.rxVerID.assignFace(face, toUser: userId)
+            }
+            .ignoreElements()
+            .andThen(Observable<String>.just("test-images/jakub/Photo 04-05-2016, 20 31 29.png").compactMap { path in
+                Bundle(for: type(of: self)).url(forResource: path, withExtension: nil)
+            })
+            .flatMap { url in
+                self.rxVerID.authenticateUser(userId, inImageURL: url)
+            }
+            .single()
+            .subscribe(onNext: { authenticated in
+                expectation.fulfill()
+                XCTAssertTrue(authenticated)
+            }, onError: { error in
+                expectation.fulfill()
+                XCTFail(error.localizedDescription)
+            }, onCompleted: nil, onDisposed: nil)
+        wait(for: [expectation], timeout: 20.0)
+        disposable.dispose()
+    }
+    
+    func test_authenticateUserInFaces_failsWithOtherUser() {
+        let expectation = XCTestExpectation(description: "Authenticate user")
+        let userId = "test"
+        let disposable = self.facesOfUser(1).take(1).single().flatMap { face -> Completable in
+                self.rxVerID.assignFace(face, toUser: userId)
+            }
+            .ignoreElements()
+            .andThen(self.facesOfUser(2).toArray())
+            .flatMap { faces in
+                self.rxVerID.authenticateUser(userId, inFaces: faces)
+            }
+            .subscribe(onSuccess: { authenticated in
+                expectation.fulfill()
+                XCTAssertFalse(authenticated)
+            }, onError: { error in
+                expectation.fulfill()
+                XCTFail(error.localizedDescription)
+            })
+        wait(for: [expectation], timeout: 20.0)
+        disposable.dispose()
+    }
+    
+    // MARK: - Session result parsing
+    
+    func test_getImageURLsFromSessionResult_returnsImageURLs() {
+        let expectation = XCTestExpectation()
+        let disposable = self.sessionResult()
+            .asObservable()
+            .flatMap { result in
+                self.rxVerID.imageURLsFromSessionResult(result)
+            }
+            .toArray()
+            .subscribe(onSuccess: { urls in
+                expectation.fulfill()
+                XCTAssertFalse(urls.isEmpty)
+            }, onError: { error in
+                expectation.fulfill()
+                XCTFail(error.localizedDescription)
+            })
+        wait(for: [expectation], timeout: 20.0)
+        disposable.dispose()
+    }
+    
+    func test_getImageURLsWithNonExistentBearingFromSessionResult_returnsEmptyArray() {
+        let expectation = XCTestExpectation()
+        let disposable = self.sessionResult()
+            .asObservable()
+            .flatMap { result in
+                self.rxVerID.imageURLsFromSessionResult(result, bearing: .left)
+            }
+            .toArray()
+            .subscribe(onSuccess: { urls in
+                expectation.fulfill()
+                XCTAssertTrue(urls.isEmpty)
+            }, onError: { error in
+                expectation.fulfill()
+                XCTFail(error.localizedDescription)
+            })
+        wait(for: [expectation], timeout: 20.0)
+        disposable.dispose()
+    }
+    
+    func test_getImageURLsWithStraightBearingFromSessionResult_returnsImageURLs() {
+        let expectation = XCTestExpectation()
+        let disposable = self.sessionResult()
+            .asObservable()
+            .flatMap { result in
+                self.rxVerID.imageURLsFromSessionResult(result, bearing: .straight)
+            }
+            .toArray()
+            .subscribe(onSuccess: { urls in
+                expectation.fulfill()
+                XCTAssertFalse(urls.isEmpty)
+            }, onError: { error in
+                expectation.fulfill()
+                XCTFail(error.localizedDescription)
+            })
+        wait(for: [expectation], timeout: 20.0)
+        disposable.dispose()
+    }
+    
+    func test_getImagesFromSessionResult_returnsImages() {
+        let expectation = XCTestExpectation()
+        let disposable = self.sessionResult()
+            .asObservable()
+            .flatMap { result in
+                self.rxVerID.imagesFromSessionResult(result)
+            }
+            .toArray()
+            .subscribe(onSuccess: { images in
+                expectation.fulfill()
+                XCTAssertFalse(images.isEmpty)
+            }, onError: { error in
+                expectation.fulfill()
+                XCTFail(error.localizedDescription)
+            })
+        wait(for: [expectation], timeout: 20.0)
+        disposable.dispose()
+    }
+    
+    func test_getCroppedFaceImagesFromSessionResult_returnsCroppedImages() {
+        let expectation = XCTestExpectation()
+        let disposable = self.sessionResult()
+            .asObservable()
+            .flatMap { result in
+                self.rxVerID.croppedFaceImagesFromSessionResult(result)
+            }
+            .toArray()
+            .subscribe(onSuccess: { images in
+                expectation.fulfill()
+                XCTAssertFalse(images.isEmpty)
+            }, onError: { error in
+                expectation.fulfill()
+                XCTFail(error.localizedDescription)
+            })
+        wait(for: [expectation], timeout: 20.0)
+        disposable.dispose()
+    }
+    
+    func test_getFacesFromSessionResult_returnsFaces() {
+        let expectation = XCTestExpectation()
+        let disposable = self.sessionResult()
+            .asObservable()
+            .flatMap { result in
+                self.rxVerID.facesFromSessionResult(result)
+            }
+            .toArray()
+            .subscribe(onSuccess: { faces in
+                expectation.fulfill()
+                XCTAssertFalse(faces.isEmpty)
+            }, onError: { error in
+                expectation.fulfill()
+                XCTFail(error.localizedDescription)
+            })
+        wait(for: [expectation], timeout: 20.0)
+        disposable.dispose()
+    }
+    
+    func test_getRecognizableFacesFromSessionResult_returnsFaces() {
+        let expectation = XCTestExpectation()
+        let disposable = self.sessionResult()
+            .asObservable()
+            .flatMap { result in
+                self.rxVerID.facesFromSessionResult(result)
+            }
+            .toArray()
+            .subscribe(onSuccess: { faces in
+                expectation.fulfill()
+                XCTAssertFalse(faces.isEmpty)
+            }, onError: { error in
+                expectation.fulfill()
+                XCTFail(error.localizedDescription)
+            })
+        wait(for: [expectation], timeout: 20.0)
+        disposable.dispose()
+    }
+    
+    func test_getFacesAndImagesFromSessionResult_returnsArray() {
+        let expectation = XCTestExpectation()
+        let disposable = self.sessionResult()
+            .asObservable()
+            .flatMap { result in
+                self.rxVerID.facesAndImagesFromSessionResult(result)
+            }
+            .toArray()
+            .subscribe(onSuccess: { faces in
+                expectation.fulfill()
+                XCTAssertFalse(faces.isEmpty)
+            }, onError: { error in
+                expectation.fulfill()
+                XCTFail(error.localizedDescription)
+            })
+        wait(for: [expectation], timeout: 20.0)
+        disposable.dispose()
     }
     
     // MARK: -
     
-    func testFaces(userId: Int) -> Observable<RecognizableFace> {
+    func facesOfUser(_ userId: Int) -> Observable<RecognizableFace> {
         return Observable<RecognizableFace>.create { observer in
             do {
                 let jsonDecoder = JSONDecoder()
@@ -406,7 +603,7 @@ class RxVerIDTests: XCTestCase {
                 case 1:
                     faceResources = ["test-images/jakub/Photo 04-05-2016, 18 57 50.json", "test-images/jakub/Photo 04-05-2016, 20 31 29.json"]
                 case 2:
-                    faceResources = []
+                    faceResources = ["test-images/marcin/Photo 31-05-2016, 15 21 08.json", "test-images/marcin/Photo 31-05-2016, 15 20 26.json"]
                 default:
                     throw NSError(domain: kVerIDErrorDomain, code: 101, userInfo: [NSLocalizedDescriptionKey:"Invalid user ID \(userId)"])
                 }
@@ -426,4 +623,49 @@ class RxVerIDTests: XCTestCase {
             return Disposables.create()
         }
     }
+    
+    func sessionResult() -> Single<VerIDSessionResult> {
+        let paths: [String] = ["test-images/marcin/Photo 31-05-2016, 15 20 26.jpg","test-images/marcin/Photo 31-05-2016, 15 21 08.jpg"]
+        let bundle = Bundle(for: type(of: self))
+        return Observable<String>.from(paths)
+            .compactMap { path in
+                bundle.url(forResource: path, withExtension: nil)
+            }
+            .flatMap { url in
+                self.rxVerID.detectRecognizableFacesInImageURL(url, limit: 1).map { face in
+                    DetectedFace(face: face, bearing: .straight, imageURL: url)
+                }
+            }
+            .toArray()
+            .map { attachments in
+                return VerIDSessionResult(attachments: attachments)
+            }
+    }
+    
+//    func test_facesToJson() {
+//        let expectation = XCTestExpectation()
+//        let paths: [String] = ["test-images/marcin/Photo 31-05-2016, 15 20 26.jpg","test-images/marcin/Photo 31-05-2016, 15 21 08.jpg"]
+//        let jsonEncoder = JSONEncoder()
+//        let bundle = Bundle(for: type(of: self))
+//        let disposable = Observable<String>.from(paths)
+//            .compactMap { path in
+//                bundle.url(forResource: path, withExtension: nil)
+//            }.flatMap { url in
+//                self.rxVerID.detectRecognizableFacesInImageURL(url, limit: 1).map { face -> XCTAttachment in
+//                    let json = try jsonEncoder.encode(face)
+//                    let attachment = XCTAttachment(data: json)
+//                    attachment.name = url.deletingPathExtension().lastPathComponent+".json"
+//                    attachment.lifetime = .keepAlways
+//                    return attachment
+//                }
+//            }.subscribe(onNext: { attachment in
+//                self.add(attachment)
+//                expectation.fulfill()
+//            }, onError: { error in
+//                expectation.fulfill()
+//                XCTFail(error.localizedDescription)
+//            }, onCompleted: nil, onDisposed: nil)
+//        wait(for: [expectation], timeout: 20.0)
+//        disposable.dispose()
+//    }
 }

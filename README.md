@@ -41,7 +41,7 @@ let url = URL(fileURLWithPath: "test.jpg")
 rxVerID.detectFacesInImageURL(url, limit: 1) // Detect one face
     .single() // Convert observable to single
     .flatMap { face in
-        return self.rxVerID.cropImageURL(url, toFace: face) // Crop the image
+        rxVerID.cropImageURL(url, toFace: face) // Crop the image
     }
     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default)) // Subscribe on a background thread
     .observeOn(MainScheduler()) // Observe on main thread
@@ -50,4 +50,76 @@ rxVerID.detectFacesInImageURL(url, limit: 1) // Detect one face
     }, onError: { error in
       // Something went wrong, inspect error
     }, onCompleted: nil, onDisposed: nil)
+~~~
+
+### Detect a face in an image and assign it to a user
+~~~swift
+import RxVerID
+import RxSwift
+
+// Create an instance of RxVerID
+let rxVerID = RxVerID()
+// Set this to a file URL of an image with a face
+let url = URL(fileURLWithPath: "test.jpg")
+// Set this to an identifier for your user
+let userId = "testUserId"
+rxVerID.detectRecognizableFacesInImageURL(url, limit: 1) // Detect one face
+    .single() // Convert observable to single to ensure one face was found
+    .flatMap { face in
+        rxVerID.assignFace(face, toUser: userId) // Assign the detected face to user
+    }
+    .asCompletable()
+    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default)) // Subscribe on a background thread
+    .observeOn(MainScheduler()) // Observe on main thread
+    .subscribe(onCompleted: {
+      // The face has been assigned to user "testUserId"
+    }, onError: { error in
+      // Something went wrong, inspect error
+    })
+~~~
+
+### Authenticate user in an image
+~~~swift
+import RxVerID
+import RxSwift
+
+// Create an instance of RxVerID
+let rxVerID = RxVerID()
+// Set this to a file URL of an image with a face
+let url = URL(fileURLWithPath: "test.jpg")
+// Set this to an identifier for your user
+let userId = "testUserId"
+rxVerID.authenticateUser(userId, inImageURL: url) // Detect one face
+    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default)) // Subscribe on a background thread
+    .observeOn(MainScheduler()) // Observe on main thread
+    .subscribe(onSuccess: { authenticated in
+    	if authenticated {
+      		// The image has been authenticated as user "testUserId"
+      }
+    }, onError: { error in
+      // Something went wrong, inspect error
+    })
+~~~
+
+### Identify users in image
+~~~swift
+import RxVerID
+import RxSwift
+
+// Create an instance of RxVerID
+let rxVerID = RxVerID()
+// Set this to a file URL of an image with a face
+let url = URL(fileURLWithPath: "test.jpg")
+rxVerID.identifyUsersInImageURL(url) // Identify users
+	.single() // Fail if no users or more than one user are identified
+	.map { userScoreTuple in
+		userScorePair.0 // We only need the user ID without the score
+	}
+	.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default)) // Subscribe on a background thread
+	.observeOn(MainScheduler()) // Observe on main thread
+	.subscribe(onNext: { userId in
+		// Identified userId
+	}, onError: { error in
+		// Something went wrong, inspect error
+	}, onCompleted: nil, onDisposed: nil)
 ~~~

@@ -123,3 +123,5 @@ rxVerID.identifyUsersInImageURL(url) // Identify users
 		// Something went wrong, inspect error
 	}, onCompleted: nil, onDisposed: nil)
 ~~~
+
+### [Reference documentation](https://appliedrecognition.github.io/Rx-Ver-ID-Apple/Classes/RxVerID.html)

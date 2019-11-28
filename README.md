@@ -1,3 +1,5 @@
+![Cocoapods](https://img.shields.io/cocoapods/v/Rx-Ver-ID)
+
 # Rx-Ver-ID-Apple
 Reactive implementation of Ver-ID for iOS
 

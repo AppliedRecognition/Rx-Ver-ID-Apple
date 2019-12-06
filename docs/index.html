@@ -40,15 +40,152 @@
         <section>
           <section class="section">
             
-            <h1 id='rxverid' class='heading'>RxVerID</h1>
-<h3 id='authors' class='heading'>Authors</h3>
+            <p><img src="https://img.shields.io/cocoapods/v/Rx-Ver-ID" alt="Cocoapods"></p>
+<h1 id='rx-ver-id-apple' class='heading'>Rx-Ver-ID-Apple</h1>
 
-<p>Applied Recognition, Inc.</p>
+<p>Reactive implementation of Ver-ID for iOS</p>
+<h2 id='installation' class='heading'>Installation</h2>
+
+<ol>
+<li><a href="https://dev.ver-id.com/admin/register">Request an API secret</a> for your app. We will need your app&rsquo;s bundle ID.</li>
+<li><p>Add the following entry in your app&rsquo;s <strong>Info.plist</strong> substituting <code>[API secret]</code> for the API secret obtained in step 1:</p>
+<pre class="highlight xml"><code><span class="nt">&lt;key&gt;</span>com.appliedrec.verid.apiSecret<span class="nt">&lt;/key&gt;</span>
+<span class="nt">&lt;string&gt;</span>[API secret]<span class="nt">&lt;/string&gt;</span>
+</code></pre></li>
+<li><p>If your project is using <a href="https://cocoapods.org">CocoaPods</a> for dependency management, open the project&rsquo;s <strong>Podfile</strong>. Otherwise make sure CocoaPods is installed and in your project&rsquo;s folder create a file named <strong>Podfile</strong> (without an extension).</p></li>
+<li><p>Let&rsquo;s assume your project is called <strong>MyProject</strong> and it has an app target called <strong>MyApp</strong>. Open the <strong>Podfile</strong> in a text editor and enter the following:</p>
+<pre class="highlight ruby"><code><span class="n">project</span> <span class="s1">'MyProject.xcodeproj'</span>
+<span class="n">workspace</span> <span class="s1">'MyProject.xcworkspace'</span>
+<span class="n">platform</span> <span class="ss">:ios</span><span class="p">,</span> <span class="s1">'11.0'</span>
+<span class="n">target</span> <span class="s1">'MyApp'</span> <span class="k">do</span>
+    <span class="n">use_frameworks!</span>
+    <span class="n">pod</span> <span class="s1">'Rx-Ver-ID'</span>
+<span class="k">end</span>
+</code></pre></li>
+<li><p>Save the Podfile. Open <strong>Terminal</strong> and navigate to your project&rsquo;s folder. Then enter:</p>
+<pre class="highlight shell"><code>pod <span class="nb">install</span>
+</code></pre></li>
+<li><p>You can now open <strong>MyProject.xcworkspace</strong> in <strong>Xcode</strong> and Rx-Ver-ID will be available to use in your app <strong>MyApp</strong>.</p></li>
+</ol>
+<h2 id='examples' class='heading'>Examples</h2>
+<h3 id='detect-a-face-in-an-image-and-crop-the-image-to-the-bounds-of-the-face' class='heading'>Detect a face in an image and crop the image to the bounds of the face</h3>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">RxVerID</span>
+<span class="kd">import</span> <span class="kt">RxSwift</span>
+
+<span class="c1">// Create an instance of RxVerID</span>
+<span class="k">let</span> <span class="nv">rxVerID</span> <span class="o">=</span> <span class="kt">RxVerID</span><span class="p">()</span>
+<span class="c1">// Set this to a file URL of an image with a face</span>
+<span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">fileURLWithPath</span><span class="p">:</span> <span class="s">"test.jpg"</span><span class="p">)</span>
+<span class="n">rxVerID</span><span class="o">.</span><span class="nf">detectFacesInImageURL</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nv">limit</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span> <span class="c1">// Detect one face</span>
+    <span class="o">.</span><span class="nf">single</span><span class="p">()</span> <span class="c1">// Convert observable to single</span>
+    <span class="o">.</span><span class="n">flatMap</span> <span class="p">{</span> <span class="n">face</span> <span class="k">in</span>
+        <span class="n">rxVerID</span><span class="o">.</span><span class="nf">cropImageURL</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nv">toFace</span><span class="p">:</span> <span class="n">face</span><span class="p">)</span> <span class="c1">// Crop the image</span>
+    <span class="p">}</span>
+    <span class="o">.</span><span class="nf">subscribeOn</span><span class="p">(</span><span class="kt">ConcurrentDispatchQueueScheduler</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="k">default</span><span class="p">))</span> <span class="c1">// Subscribe on a background thread</span>
+    <span class="o">.</span><span class="nf">observeOn</span><span class="p">(</span><span class="kt">MainScheduler</span><span class="p">())</span> <span class="c1">// Observe on main thread</span>
+    <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span> <span class="n">image</span> <span class="k">in</span>
+      <span class="c1">// The image is an instance of UIImage. You can display the image in an image view, save it, etc.</span>
+    <span class="p">},</span> <span class="nv">onError</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+      <span class="c1">// Something went wrong, inspect error</span>
+    <span class="p">},</span> <span class="nv">onCompleted</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onDisposed</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+</code></pre>
+<h3 id='detect-a-face-in-an-image-and-assign-it-to-a-user' class='heading'>Detect a face in an image and assign it to a user</h3>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">RxVerID</span>
+<span class="kd">import</span> <span class="kt">RxSwift</span>
+
+<span class="c1">// Create an instance of RxVerID</span>
+<span class="k">let</span> <span class="nv">rxVerID</span> <span class="o">=</span> <span class="kt">RxVerID</span><span class="p">()</span>
+<span class="c1">// Set this to a file URL of an image with a face</span>
+<span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">fileURLWithPath</span><span class="p">:</span> <span class="s">"test.jpg"</span><span class="p">)</span>
+<span class="c1">// Set this to an identifier for your user</span>
+<span class="k">let</span> <span class="nv">userId</span> <span class="o">=</span> <span class="s">"testUserId"</span>
+<span class="n">rxVerID</span><span class="o">.</span><span class="nf">detectRecognizableFacesInImageURL</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nv">limit</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span> <span class="c1">// Detect one face</span>
+    <span class="o">.</span><span class="nf">single</span><span class="p">()</span> <span class="c1">// Convert observable to single to ensure one face was found</span>
+    <span class="o">.</span><span class="n">flatMap</span> <span class="p">{</span> <span class="n">face</span> <span class="k">in</span>
+        <span class="n">rxVerID</span><span class="o">.</span><span class="nf">assignFace</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="nv">toUser</span><span class="p">:</span> <span class="n">userId</span><span class="p">)</span> <span class="c1">// Assign the detected face to user</span>
+    <span class="p">}</span>
+    <span class="o">.</span><span class="nf">asCompletable</span><span class="p">()</span>
+    <span class="o">.</span><span class="nf">subscribeOn</span><span class="p">(</span><span class="kt">ConcurrentDispatchQueueScheduler</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="k">default</span><span class="p">))</span> <span class="c1">// Subscribe on a background thread</span>
+    <span class="o">.</span><span class="nf">observeOn</span><span class="p">(</span><span class="kt">MainScheduler</span><span class="p">())</span> <span class="c1">// Observe on main thread</span>
+    <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onCompleted</span><span class="p">:</span> <span class="p">{</span>
+      <span class="c1">// The face has been assigned to user "testUserId"</span>
+    <span class="p">},</span> <span class="nv">onError</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+      <span class="c1">// Something went wrong, inspect error</span>
+    <span class="p">})</span>
+</code></pre>
+<h3 id='authenticate-user-in-an-image' class='heading'>Authenticate user in an image</h3>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">RxVerID</span>
+<span class="kd">import</span> <span class="kt">RxSwift</span>
+
+<span class="c1">// Create an instance of RxVerID</span>
+<span class="k">let</span> <span class="nv">rxVerID</span> <span class="o">=</span> <span class="kt">RxVerID</span><span class="p">()</span>
+<span class="c1">// Set this to a file URL of an image with a face</span>
+<span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">fileURLWithPath</span><span class="p">:</span> <span class="s">"test.jpg"</span><span class="p">)</span>
+<span class="c1">// Set this to an identifier for your user</span>
+<span class="k">let</span> <span class="nv">userId</span> <span class="o">=</span> <span class="s">"testUserId"</span>
+<span class="n">rxVerID</span><span class="o">.</span><span class="nf">authenticateUser</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span> <span class="nv">inImageURL</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span> <span class="c1">// Detect one face</span>
+    <span class="o">.</span><span class="nf">subscribeOn</span><span class="p">(</span><span class="kt">ConcurrentDispatchQueueScheduler</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="k">default</span><span class="p">))</span> <span class="c1">// Subscribe on a background thread</span>
+    <span class="o">.</span><span class="nf">observeOn</span><span class="p">(</span><span class="kt">MainScheduler</span><span class="p">())</span> <span class="c1">// Observe on main thread</span>
+    <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onSuccess</span><span class="p">:</span> <span class="p">{</span> <span class="n">authenticated</span> <span class="k">in</span>
+        <span class="k">if</span> <span class="n">authenticated</span> <span class="p">{</span>
+            <span class="c1">// The image has been authenticated as user "testUserId"</span>
+      <span class="p">}</span>
+    <span class="p">},</span> <span class="nv">onError</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+      <span class="c1">// Something went wrong, inspect error</span>
+    <span class="p">})</span>
+</code></pre>
+<h3 id='identify-users-in-image' class='heading'>Identify users in image</h3>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">RxVerID</span>
+<span class="kd">import</span> <span class="kt">RxSwift</span>
+
+<span class="c1">// Create an instance of RxVerID</span>
+<span class="k">let</span> <span class="nv">rxVerID</span> <span class="o">=</span> <span class="kt">RxVerID</span><span class="p">()</span>
+<span class="c1">// Set this to a file URL of an image with a face</span>
+<span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">fileURLWithPath</span><span class="p">:</span> <span class="s">"test.jpg"</span><span class="p">)</span>
+<span class="n">rxVerID</span><span class="o">.</span><span class="nf">identifyUsersInImageURL</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="c1">// Identify users</span>
+    <span class="o">.</span><span class="nf">single</span><span class="p">()</span> <span class="c1">// Fail if no users or more than one user are identified</span>
+    <span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">userScoreTuple</span> <span class="k">in</span>
+        <span class="n">userScorePair</span><span class="o">.</span><span class="mi">0</span> <span class="c1">// We only need the user ID without the score</span>
+    <span class="p">}</span>
+    <span class="o">.</span><span class="nf">subscribeOn</span><span class="p">(</span><span class="kt">ConcurrentDispatchQueueScheduler</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="k">default</span><span class="p">))</span> <span class="c1">// Subscribe on a background thread</span>
+    <span class="o">.</span><span class="nf">observeOn</span><span class="p">(</span><span class="kt">MainScheduler</span><span class="p">())</span> <span class="c1">// Observe on main thread</span>
+    <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span> <span class="n">userId</span> <span class="k">in</span>
+        <span class="c1">// Identified userId</span>
+    <span class="p">},</span> <span class="nv">onError</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+        <span class="c1">// Something went wrong, inspect error</span>
+    <span class="p">},</span> <span class="nv">onCompleted</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">onDisposed</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+</code></pre>
+<h3 id='run-a-ver-id-session' class='heading'>Run a Ver-ID session</h3>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">RxVerID</span>
+<span class="kd">import</span> <span class="kt">RxSwift</span>
+
+<span class="c1">// Create an instance of RxVerID</span>
+<span class="k">let</span> <span class="nv">rxVerID</span> <span class="o">=</span> <span class="kt">RxVerID</span><span class="p">()</span>
+<span class="c1">// Create a dispose bag</span>
+<span class="k">let</span> <span class="nv">disposeBag</span> <span class="o">=</span> <span class="kt">DisposeBag</span><span class="p">()</span>
+<span class="c1">// Create session settings</span>
+<span class="k">let</span> <span class="nv">settings</span> <span class="o">=</span> <span class="kt">LivenessDetectionSessionSettings</span><span class="p">()</span>
+<span class="n">rxVerID</span><span class="o">.</span><span class="nf">session</span><span class="p">(</span><span class="nv">settings</span><span class="p">:</span> <span class="n">settings</span><span class="p">)</span>
+    <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onSuccess</span><span class="p">:</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
+        <span class="c1">// Session succeeded </span>
+    <span class="p">},</span> <span class="nv">onError</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+        <span class="c1">// Session failed</span>
+    <span class="p">},</span> <span class="nv">onCompleted</span><span class="p">:</span> <span class="p">{</span>
+        <span class="c1">// Session was cancelled</span>
+    <span class="p">})</span>
+    <span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
+</code></pre>
+<h3 id='advanced-options' class='heading'>Advanced options</h3>
+
+<p>If you&rsquo;re not planning to run Ver-ID sessions using RxVerID you can decrease the footprint of your app by only including the core part of the library. To do that change the pod spec to:</p>
+<pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'Rx-Ver-ID/Core'</span>
+</code></pre>
+<h3 id='a-href-https-appliedrecognition-github-io-rx-ver-id-apple-classes-rxverid-html-reference-documentation-a' class='heading'><a href="https://appliedrecognition.github.io/Rx-Ver-ID-Apple/Classes/RxVerID.html">Reference documentation</a></h3>
 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Applied Recognition, Inc.</a>. All rights reserved. (Last updated: 2019-11-22)</p>
+          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Applied Recognition, Inc.</a>. All rights reserved. (Last updated: 2019-12-06)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

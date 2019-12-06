@@ -1,4 +1,4 @@
-![Cocoapods](https://img.shields.io/cocoapods/v/Rx-Ver-ID)
+![Cocoapods](https://img.shields.io/cocoapods/v/Rx-Ver-ID.svg)
 
 # Rx-Ver-ID-Apple
 Reactive implementation of Ver-ID for iOS
@@ -124,6 +124,35 @@ rxVerID.identifyUsersInImageURL(url) // Identify users
 	}, onError: { error in
 		// Something went wrong, inspect error
 	}, onCompleted: nil, onDisposed: nil)
+~~~
+
+### Run a Ver-ID session
+~~~swift
+import RxVerID
+import RxSwift
+
+// Create an instance of RxVerID
+let rxVerID = RxVerID()
+// Create a dispose bag
+let disposeBag = DisposeBag()
+// Create session settings
+let settings = LivenessDetectionSessionSettings()
+rxVerID.session(settings: settings)
+    .subscribe(onSuccess: { result in
+        // Session succeeded 
+    }, onError: { error in
+        // Session failed
+    }, onCompleted: {
+        // Session was cancelled
+    })
+    .disposed(by: disposeBag)
+~~~
+
+### Advanced options
+If you're not planning to run Ver-ID sessions using RxVerID you can decrease the footprint of your app by only including the core part of the library. To do that change the pod spec to:
+
+~~~ruby
+pod 'Rx-Ver-ID/Core'
 ~~~
 
 ### [Reference documentation](https://appliedrecognition.github.io/Rx-Ver-ID-Apple/Classes/RxVerID.html)

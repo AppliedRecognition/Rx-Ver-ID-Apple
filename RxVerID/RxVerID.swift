@@ -8,13 +8,11 @@
 
 import UIKit
 import VerIDCore
-import VerIDUI
 import RxSwift
 
 /// Reactive implementation of common Ver-ID tasks
-public class RxVerID: VerIDSessionDelegate {
+public class RxVerID {
     
-    private var sessionObservers: [VerIDSession:(MaybeEvent<VerIDSessionResult>) -> Void] = [:]
     private var veridInstance: VerID?
     private let veridSemaphore = DispatchSemaphore(value: 1)
     
@@ -458,27 +456,6 @@ public class RxVerID: VerIDSessionDelegate {
         }
     }
     
-    // MARK: - Session
-    
-    /// Run a Ver-ID session
-    /// - Parameter settings: Ver-ID session settings
-    /// - Returns: Maybe whose value is a session result if the session completes successfully
-    /// - Note: If the session is cancelled the maybe completes without a value. If the session fails the maybe returns an error.
-    /// - Since: 1.0.0
-    public func session<T: VerIDSessionSettings>(settings: T) -> Maybe<VerIDSessionResult> {
-        return self.verid.asMaybe().flatMap { verid in
-            return Maybe<VerIDSessionResult>.create { maybe in
-                let session = VerIDSession(environment: verid, settings: settings)
-                self.sessionObservers[session] = maybe
-                session.delegate = self
-                session.start()
-                return Disposables.create {
-                    self.sessionObservers.removeValue(forKey: session)
-                }
-            }
-        }
-    }
-    
     // MARK: - Session result parsing
     
     /// Get image URLs from session result
@@ -597,26 +574,6 @@ public class RxVerID: VerIDSessionDelegate {
                 return nil
             }
             return (face, url, attachment.bearing)
-        }
-    }
-    
-    // MARK: - Ver-ID session delegate
-    
-    public func session(_ session: VerIDSession, didFinishWithResult result: VerIDSessionResult) {
-        if let observer = self.sessionObservers[session] {
-            if let error = result.error {
-                observer(.error(error))
-            } else {
-                observer(.success(result))
-            }
-            self.sessionObservers.removeValue(forKey: session)
-        }
-    }
-    
-    public func sessionWasCanceled(_ session: VerIDSession) {
-        if let observer = self.sessionObservers[session] {
-            observer(.completed)
-            self.sessionObservers.removeValue(forKey: session)
         }
     }
     

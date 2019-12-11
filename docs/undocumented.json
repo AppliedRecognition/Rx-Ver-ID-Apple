@@ -1,12 +1,12 @@
 {
   "warnings": [
     {
-      "file": "/Users/jakub/Applied-Recognition/Ver-ID-Apple/RxVerID/RxVerID/RxVerID.swift",
+      "file": "/Users/jakub/Applied-Recognition/Ver-ID-Apple/VerIDUI/RxVerID/RxVerID/RxVerID.swift",
       "line": 666,
       "symbol": "ImageError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/jakub/Applied-Recognition/Ver-ID-Apple/RxVerID"
+  "source_directory": "/Users/jakub/Applied-Recognition/Ver-ID-Apple/VerIDUI/RxVerID"
 }

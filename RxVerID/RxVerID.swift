@@ -577,6 +577,20 @@ public class RxVerID {
         }
     }
     
+    /// Get recognizable faces and images cropped to the bounding boxes of faces from session result
+    /// - Parameters:
+    ///   - sessionResult: Session result
+    ///   - bearing: Optional face bearing by which to filter the elements
+    /// - Returns: Observable whose elements are triplets of recognizable face, image and bearing
+    /// - Since: 1.2.0
+    public func recognizableFacesAndCroppedFaceImagesFromSessionResult(_ sessionResult: VerIDSessionResult, bearing: Bearing? = nil) -> Observable<(RecognizableFace,UIImage,Bearing)> {
+        return self.recognizableFacesAndImagesFromSessionResult(sessionResult, bearing: bearing).flatMap({ (face,imageURL,bearing) in
+            return self.cropImageURL(imageURL, toFace: face).asObservable().map({ image in
+                return (face,image,bearing)
+            })
+        })
+    }
+    
 //    func writeImage(_ image: VerIDImage, usingService service: ImageWriterService) -> Single<URL> {
 //        return Single<URL>.create { single in
 //            var url: URL? = nil

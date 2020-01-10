@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "Rx-Ver-ID"
   s.module_name  = "RxVerID"
-  s.version      = "1.2.0"
+  s.version      = "1.2.1"
   s.summary      = "Reactive implementation of Ver-ID face detection and recognition"
   s.homepage     = "https://github.com/AppliedRecognition"
   s.license      = { :type => "COMMERCIAL", :file => "LICENCE.txt" }

@@ -138,6 +138,8 @@ let disposeBag = DisposeBag()
 // Create session settings
 let settings = LivenessDetectionSessionSettings()
 rxVerID.session(settings: settings)
+    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+    .observeOn(MainScheduler.instance)
     .subscribe(onSuccess: { result in
         // Session succeeded 
     }, onError: { error in

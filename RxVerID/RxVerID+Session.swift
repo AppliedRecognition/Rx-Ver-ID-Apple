@@ -56,7 +56,7 @@ public extension RxVerID {
                     delegate = nil
                 }
             }
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Run a Ver-ID session
@@ -77,7 +77,7 @@ public extension RxVerID {
                     delegate = nil
                 }
             }
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
 }
 #endif

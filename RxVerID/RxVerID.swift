@@ -98,7 +98,7 @@ public class RxVerID {
                 single(.error(VerIDImageWriterServiceError.imageEncodingError))
             }
             return Disposables.create()
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     // MARK: - Face detection
@@ -112,7 +112,7 @@ public class RxVerID {
     public func detectFacesInImageURL(_ url: URL, limit: Int) -> Observable<Face> {
         return self.veridImageFromURL(url).asObservable().flatMap { image in
             return self.detectFacesInImage(image, limit: limit)
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Detect faces in Ver-ID image
@@ -135,7 +135,7 @@ public class RxVerID {
                 }
                 return Disposables.create()
             }
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     // MARK: - Recognizable face detection
@@ -149,7 +149,7 @@ public class RxVerID {
     public func detectRecognizableFacesInImageURL(_ url: URL, limit: Int) -> Observable<RecognizableFace> {
         return self.veridImageFromURL(url).asObservable().flatMap { image in
             return self.detectRecognizableFacesInImage(image, limit: limit)
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Detect faces that can be used for face recognition in Ver-ID image
@@ -163,7 +163,7 @@ public class RxVerID {
             return self.detectFacesInImage(image, limit: limit).flatMap { face in
                 return self.createRecognizableFaceFromFace(face, image: image)
             }
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     // MARK: - Face to recognizable face conversion
@@ -187,7 +187,7 @@ public class RxVerID {
                 }
                 return Disposables.create()
             }
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     // MARK: - User identification
@@ -199,7 +199,7 @@ public class RxVerID {
     public func identifyUsersInImageURL(_ url: URL) -> Observable<(String,Float)> {
         return self.veridImageFromURL(url).asObservable().flatMap { image in
             return self.identifyUsersInImage(image)
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Identify users in Ver-ID image
@@ -209,7 +209,7 @@ public class RxVerID {
     public func identifyUsersInImage(_ image: VerIDImage) -> Observable<(String,Float)> {
         return self.detectRecognizableFacesInImage(image, limit: 1).flatMap { face in
             return self.identifyUsersInFace(face)
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Identify users in face
@@ -241,7 +241,7 @@ public class RxVerID {
                 }
                 return Disposables.create()
             }
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     // MARK: - Cropping image to face
@@ -272,7 +272,7 @@ public class RxVerID {
                 emitter(.error(error))
             }
             return Disposables.create()
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     // MARK: - Face comparison
@@ -295,7 +295,7 @@ public class RxVerID {
                 }
                 return Disposables.create()
             }
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     // MARK: - User management
@@ -320,7 +320,7 @@ public class RxVerID {
                     event = nil
                 }
             }
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Assign face to user
@@ -350,7 +350,7 @@ public class RxVerID {
                     event = nil
                 }
             }
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Get users
@@ -370,7 +370,7 @@ public class RxVerID {
                 }
                 return Disposables.create()
             }
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Get faces of user
@@ -391,7 +391,7 @@ public class RxVerID {
                 }
                 return Disposables.create()
             }
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     // MARK: - User authentication
@@ -413,7 +413,7 @@ public class RxVerID {
                     return authentications.contains(true)
                 }
             }
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Authenticate user in face
@@ -429,7 +429,7 @@ public class RxVerID {
                     return score >= verid.faceRecognition.authenticationScoreThreshold.floatValue
                 }
             }
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Authenticate user in image
@@ -441,7 +441,7 @@ public class RxVerID {
     public func authenticateUser(_ user: String, inImageURL url: URL) -> Single<Bool> {
         return self.detectRecognizableFacesInImageURL(url, limit: 1).asSingle().flatMap { face in
             return self.authenticateUser(user, inFace: face)
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Authenticate user in image
@@ -453,7 +453,7 @@ public class RxVerID {
     public func authenticateUser(_ user: String, inImage image: VerIDImage) -> Single<Bool> {
         return self.detectRecognizableFacesInImage(image, limit: 1).asSingle().flatMap { face in
             return self.authenticateUser(user, inFace: face)
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     // MARK: - Session result parsing
@@ -473,7 +473,7 @@ public class RxVerID {
             }
             observer.onCompleted()
             return Disposables.create()
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Get images from session result
@@ -496,7 +496,7 @@ public class RxVerID {
                 }
                 return Disposables.create()
             }.asObservable()
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Get images from session result and crop them to their corresponding faces
@@ -513,7 +513,7 @@ public class RxVerID {
             return (attachment.face, url)
         }.flatMap { (tuple: (Face,URL)) in
             return self.cropImageURL(tuple.1, toFace: tuple.0).asObservable()
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Get faces from session result
@@ -528,7 +528,7 @@ public class RxVerID {
                 return nil
             }
             return attachment.face
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Get faces that can be used for face recognition from session result
@@ -559,7 +559,7 @@ public class RxVerID {
                 return nil
             }
             return (attachment.face, url, attachment.bearing)
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Get recognizable faces and images from session result
@@ -574,7 +574,7 @@ public class RxVerID {
                 return nil
             }
             return (face, url, attachment.bearing)
-        }
+        }.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
     /// Get recognizable faces and images cropped to the bounding boxes of faces from session result
@@ -588,7 +588,7 @@ public class RxVerID {
             return self.cropImageURL(imageURL, toFace: face).asObservable().map({ image in
                 return (face,image,bearing)
             })
-        })
+        }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
     
 //    func writeImage(_ image: VerIDImage, usingService service: ImageWriterService) -> Single<URL> {

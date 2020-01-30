@@ -2,7 +2,7 @@
   "warnings": [
     {
       "file": "/Users/jakub/Applied-Recognition/Ver-ID-Apple/VerIDUI/RxVerID/RxVerID/RxVerID.swift",
-      "line": 680,
+      "line": 698,
       "symbol": "ImageError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"

@@ -15,6 +15,7 @@ public class RxVerID {
     
     private var veridInstance: VerID?
     private let veridSemaphore = DispatchSemaphore(value: 1)
+    private let veridPassword: String?
     
     /// Initializer
     /// - Since: 1.0.0
@@ -23,6 +24,18 @@ public class RxVerID {
         self.faceDetectionFactory = detectionRecognitionFactory
         self.faceRecognitionFactory = detectionRecognitionFactory
         self.userManagementFactory = VerIDUserManagementFactory()
+        self.veridPassword = nil
+    }
+    
+    /// Initializer
+    /// - Parameter veridPassword: Password to unlock P12 identity file
+    /// - Since: 1.3.0
+    public init(veridPassword: String) {
+        let detectionRecognitionFactory = VerIDFaceDetectionRecognitionFactory(apiSecret: nil)
+        self.faceDetectionFactory = detectionRecognitionFactory
+        self.faceRecognitionFactory = detectionRecognitionFactory
+        self.userManagementFactory = VerIDUserManagementFactory()
+        self.veridPassword = veridPassword
     }
     
     // MARK: - Ver-ID instance
@@ -36,7 +49,12 @@ public class RxVerID {
                 self.veridSemaphore.signal()
                 single(.success(verid))
             } else {
-                let factory = VerIDFactory()
+                let factory: VerIDFactory
+                if let password = self.veridPassword {
+                    factory = VerIDFactory(veridPassword: password)
+                } else {
+                    factory = VerIDFactory()
+                }
                 factory.faceDetectionFactory = self.faceDetectionFactory
                 factory.faceRecognitionFactory = self.faceRecognitionFactory
                 factory.userManagementFactory = self.userManagementFactory

@@ -14,11 +14,11 @@ Pod::Spec.new do |s|
   s.documentation_url = "https://appliedrecognition.github.io/Rx-Ver-ID-Apple/"
   s.subspec "Core" do |core|
     core.source_files = "RxVerID/RxVerID.swift"
-    core.dependency "Ver-ID-Core", ">= 1.10.0", "< 2"
+    core.dependency "Ver-ID-Core", ">= 1.10.1", "< 2"
   end
   s.subspec "UI" do |ui|
     ui.source_files = "RxVerID/RxVerID+Session.swift"
     ui.dependency "Rx-Ver-ID/Core", "#{s.version}"
-    ui.dependency "Ver-ID-UI", ">= 1.10.0", "< 2"
+    ui.dependency "Ver-ID-UI", ">= 1.10.1", "< 2"
   end
 end

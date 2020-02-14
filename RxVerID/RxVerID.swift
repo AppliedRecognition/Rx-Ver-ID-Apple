@@ -69,7 +69,7 @@ public class RxVerID {
                 }
             }
             return Disposables.create()
-        }
+        }.subscribeOn(SerialDispatchQueueScheduler(qos: .default))
     }
     
     /// Face detection factory

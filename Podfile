@@ -1,5 +1,7 @@
 project 'RxVerID.xcodeproj'
 
+platform :ios, '11.0'
+
 target 'RxVerID' do
     use_frameworks!
     pod 'RxSwift', '~> 5'

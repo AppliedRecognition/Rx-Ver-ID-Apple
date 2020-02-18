@@ -13,6 +13,10 @@ import VerIDCore
 import VerIDUI
 import RxSwift
 
+public enum VerIDSessionError: Error {
+    case sessionFailed(result: VerIDSessionResult)
+}
+
 fileprivate class SessionDelegate: VerIDSessionDelegate {
     
     private let event: (MaybeEvent<VerIDSessionResult>) -> Void
@@ -22,8 +26,9 @@ fileprivate class SessionDelegate: VerIDSessionDelegate {
     }
     
     func session(_ session: VerIDSession, didFinishWithResult result: VerIDSessionResult) {
-        if let error = result.error {
-            self.event(.error(error))
+        if result.error != nil {
+            let sessionError = VerIDSessionError.sessionFailed(result: result)
+            self.event(.error(sessionError))
         } else {
             self.event(.success(result))
         }

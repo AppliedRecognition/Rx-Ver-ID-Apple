@@ -9,33 +9,38 @@
 import UIKit
 import VerIDCore
 import RxSwift
+import VerIDSDKIdentity
 
 /// Reactive implementation of common Ver-ID tasks
 public class RxVerID {
     
     private var veridInstance: VerID?
     private let veridSemaphore = DispatchSemaphore(value: 1)
-    private let veridPassword: String?
+    private let identity: VerIDSDKIdentity?
     
     /// Initializer
     /// - Since: 1.0.0
-    public init() {
-        let detectionRecognitionFactory = VerIDFaceDetectionRecognitionFactory(apiSecret: nil)
-        self.faceDetectionFactory = detectionRecognitionFactory
-        self.faceRecognitionFactory = detectionRecognitionFactory
-        self.userManagementFactory = VerIDUserManagementFactory()
-        self.veridPassword = nil
+    public convenience init() {
+        self.init(identity: try? VerIDSDKIdentity())
     }
     
     /// Initializer
     /// - Parameter veridPassword: Password to unlock P12 identity file
     /// - Since: 1.3.0
-    public init(veridPassword: String) {
+    public convenience init(veridPassword: String) {
+        self.init(identity: try? VerIDSDKIdentity(password: veridPassword))
+    }
+    
+    
+    /// Initializer
+    /// - Parameter identity: Ver-ID SDK identity
+    /// - Since: 1.5.0
+    public init(identity: VerIDSDKIdentity?) {
         let detectionRecognitionFactory = VerIDFaceDetectionRecognitionFactory(apiSecret: nil)
         self.faceDetectionFactory = detectionRecognitionFactory
         self.faceRecognitionFactory = detectionRecognitionFactory
         self.userManagementFactory = VerIDUserManagementFactory()
-        self.veridPassword = veridPassword
+        self.identity = identity
     }
     
     // MARK: - Ver-ID instance
@@ -50,8 +55,8 @@ public class RxVerID {
                 single(.success(verid))
             } else {
                 let factory: VerIDFactory
-                if let password = self.veridPassword {
-                    factory = VerIDFactory(veridPassword: password)
+                if let identity = self.identity {
+                    factory = VerIDFactory(identity: identity)
                 } else {
                     factory = VerIDFactory()
                 }

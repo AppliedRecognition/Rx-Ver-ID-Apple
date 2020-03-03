@@ -16,30 +16,33 @@ public class RxVerID {
     
     private var veridInstance: VerID?
     private let veridSemaphore = DispatchSemaphore(value: 1)
-    private let identity: VerIDSDKIdentity?
+    private var identity: Any?
     
     /// Initializer
     /// - Since: 1.0.0
-    public convenience init() {
-        self.init(identity: try? VerIDSDKIdentity())
+    public init() {
+        let detectionRecognitionFactory = VerIDFaceDetectionRecognitionFactory(apiSecret: nil)
+        self.faceDetectionFactory = detectionRecognitionFactory
+        self.faceRecognitionFactory = detectionRecognitionFactory
+        self.userManagementFactory = VerIDUserManagementFactory()
     }
     
     /// Initializer
     /// - Parameter veridPassword: Password to unlock P12 identity file
     /// - Since: 1.3.0
+    @available(iOS 10.3, *)
     public convenience init(veridPassword: String) {
-        self.init(identity: try? VerIDSDKIdentity(password: veridPassword))
+        self.init()
+        self.identity = try? VerIDIdentity(password: veridPassword)
     }
     
     
     /// Initializer
     /// - Parameter identity: Ver-ID SDK identity
     /// - Since: 1.5.0
-    public init(identity: VerIDSDKIdentity?) {
-        let detectionRecognitionFactory = VerIDFaceDetectionRecognitionFactory(apiSecret: nil)
-        self.faceDetectionFactory = detectionRecognitionFactory
-        self.faceRecognitionFactory = detectionRecognitionFactory
-        self.userManagementFactory = VerIDUserManagementFactory()
+    @available(iOS 10.3, *)
+    public convenience init(identity: VerIDIdentity) {
+        self.init()
         self.identity = identity
     }
     
@@ -55,7 +58,7 @@ public class RxVerID {
                 single(.success(verid))
             } else {
                 let factory: VerIDFactory
-                if let identity = self.identity {
+                if #available(iOS 10.3, *), let identity = self.identity as? VerIDIdentity {
                     factory = VerIDFactory(identity: identity)
                 } else {
                     factory = VerIDFactory()

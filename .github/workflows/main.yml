@@ -1,0 +1,17 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: macOS-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      shell: bash
+      run: pod install
+    - name: Run iOS tests
+      shell: bash
+      run: xcodebuild test -workspace RxVerID.xcworkspace -scheme RxVerID -sdk iphonesimulator -configuration Debug -destination "platform=iOS Simulator,name=iPhone 11" | xcpretty

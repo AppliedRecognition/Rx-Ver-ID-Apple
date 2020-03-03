@@ -1,12 +1,19 @@
 {
   "warnings": [
     {
-      "file": "/Users/jakub/Applied-Recognition/Ver-ID-Apple/VerIDUI/RxVerID/RxVerID/RxVerID.swift",
-      "line": 698,
+      "file": "/Users/jakub/Applied-Recognition/Rx-Ver-ID-Apple/RxVerID/RxVerID+Session.swift",
+      "line": 16,
+      "symbol": "VerIDSessionError",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jakub/Applied-Recognition/Rx-Ver-ID-Apple/RxVerID/RxVerID.swift",
+      "line": 706,
       "symbol": "ImageError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/jakub/Applied-Recognition/Ver-ID-Apple/VerIDUI/RxVerID"
+  "source_directory": "/Users/jakub/Applied-Recognition/Rx-Ver-ID-Apple"
 }

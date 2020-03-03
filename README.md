@@ -1,4 +1,4 @@
-![Cocoapods](https://img.shields.io/cocoapods/v/Rx-Ver-ID.svg)
+![Cocoapods](https://img.shields.io/cocoapods/v/Rx-Ver-ID.svg) ![CI](https://github.com/AppliedRecognition/Rx-Ver-ID-Apple/workflows/CI/badge.svg?event=push)
 
 # Rx-Ver-ID-Apple
 Reactive implementation of Ver-ID for iOS
@@ -30,7 +30,7 @@ Reactive implementation of Ver-ID for iOS
 	~~~ruby
 	project 'MyProject.xcodeproj'
 	workspace 'MyProject.xcworkspace'
-	platform :ios, '11.0'
+	platform :ios, '10.3'
 	target 'MyApp' do
 		use_frameworks!
 		pod 'Rx-Ver-ID'
@@ -163,11 +163,26 @@ rxVerID.session(settings: settings)
     .disposed(by: disposeBag)
 ~~~
 
-### Advanced options
+## Advanced options
+
+### Using only low-level API
 If you're not planning to run Ver-ID sessions using RxVerID you can decrease the footprint of your app by only including the core part of the library. To do that change the pod spec to:
 
 ~~~ruby
 pod 'Rx-Ver-ID/Core'
 ~~~
 
-### [Reference documentation](https://appliedrecognition.github.io/Rx-Ver-ID-Apple/Classes/RxVerID.html)
+### Loading _Ver-ID identity.p12_ file from a URL
+If you wish to use a _Ver-ID identity.p12_ file from a location different than your app's main bundle you can construct an instance of `VerIDIdentity` and pass it to the `RxVerID` initializer. This option is only available on iOS 10.3 or newer.
+
+~~~swift
+do {
+    let url: URL // Set this to the URL pointing to your 'Ver-ID identity.p12' file
+    let identity = try VerIDIdentity(url: url)
+    let rxVerID = RxVerID(identity: identity)
+} catch {
+    // Failed to create Ver-ID identity
+}
+~~~
+
+## [Reference documentation](https://appliedrecognition.github.io/Rx-Ver-ID-Apple/Classes/RxVerID.html)

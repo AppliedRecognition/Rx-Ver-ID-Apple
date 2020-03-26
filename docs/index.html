@@ -40,7 +40,7 @@
         <section>
           <section class="section">
             
-            <p><img src="https://img.shields.io/cocoapods/v/Rx-Ver-ID.svg" alt="Cocoapods"></p>
+            <p><img src="https://img.shields.io/cocoapods/v/Rx-Ver-ID.svg" alt="Cocoapods"> <img src="https://github.com/AppliedRecognition/Rx-Ver-ID-Apple/workflows/CI/badge.svg?event=push" alt="CI"></p>
 <h1 id='rx-ver-id-apple' class='heading'>Rx-Ver-ID-Apple</h1>
 
 <p>Reactive implementation of Ver-ID for iOS</p>
@@ -73,7 +73,7 @@
 <li><p>Let&rsquo;s assume your project is called <strong>MyProject</strong> and it has an app target called <strong>MyApp</strong>. Open the <strong>Podfile</strong> in a text editor and enter the following:</p>
 <pre class="highlight ruby"><code><span class="n">project</span> <span class="s1">'MyProject.xcodeproj'</span>
 <span class="n">workspace</span> <span class="s1">'MyProject.xcworkspace'</span>
-<span class="n">platform</span> <span class="ss">:ios</span><span class="p">,</span> <span class="s1">'11.0'</span>
+<span class="n">platform</span> <span class="ss">:ios</span><span class="p">,</span> <span class="s1">'10.3'</span>
 <span class="n">target</span> <span class="s1">'MyApp'</span> <span class="k">do</span>
     <span class="n">use_frameworks!</span>
     <span class="n">pod</span> <span class="s1">'Rx-Ver-ID'</span>
@@ -182,7 +182,11 @@
 <span class="k">let</span> <span class="nv">disposeBag</span> <span class="o">=</span> <span class="kt">DisposeBag</span><span class="p">()</span>
 <span class="c1">// Create session settings</span>
 <span class="k">let</span> <span class="nv">settings</span> <span class="o">=</span> <span class="kt">LivenessDetectionSessionSettings</span><span class="p">()</span>
-<span class="n">rxVerID</span><span class="o">.</span><span class="nf">session</span><span class="p">(</span><span class="nv">settings</span><span class="p">:</span> <span class="n">settings</span><span class="p">)</span>
+<span class="c1">// Get a window in which to run the session</span>
+<span class="k">guard</span> <span class="k">let</span> <span class="nv">window</span> <span class="o">=</span> <span class="kt">UIApplication</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="nf">filter</span><span class="p">({</span> <span class="nv">$0</span><span class="o">.</span><span class="n">isKeyWindow</span><span class="p">})</span><span class="o">.</span><span class="n">first</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+<span class="n">rxVerID</span><span class="o">.</span><span class="nf">sessionInWindow</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="nv">settings</span><span class="p">:</span> <span class="n">settings</span><span class="p">)</span>
     <span class="o">.</span><span class="nf">subscribeOn</span><span class="p">(</span><span class="kt">ConcurrentDispatchQueueScheduler</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="k">default</span><span class="p">))</span>
     <span class="o">.</span><span class="nf">observeOn</span><span class="p">(</span><span class="kt">MainScheduler</span><span class="o">.</span><span class="n">instance</span><span class="p">)</span>
     <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onSuccess</span><span class="p">:</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
@@ -194,17 +198,29 @@
     <span class="p">})</span>
     <span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
 </code></pre>
-<h3 id='advanced-options' class='heading'>Advanced options</h3>
+<h2 id='advanced-options' class='heading'>Advanced options</h2>
+<h3 id='using-only-low-level-api' class='heading'>Using only low-level API</h3>
 
 <p>If you&rsquo;re not planning to run Ver-ID sessions using RxVerID you can decrease the footprint of your app by only including the core part of the library. To do that change the pod spec to:</p>
 <pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'Rx-Ver-ID/Core'</span>
 </code></pre>
-<h3 id='a-href-https-appliedrecognition-github-io-rx-ver-id-apple-classes-rxverid-html-reference-documentation-a' class='heading'><a href="https://appliedrecognition.github.io/Rx-Ver-ID-Apple/Classes/RxVerID.html">Reference documentation</a></h3>
+<h3 id='loading-em-ver-id-identity-p12-em-file-from-a-url' class='heading'>Loading <em>Ver-ID identity.p12</em> file from a URL</h3>
+
+<p>If you wish to use a <em>Ver-ID identity.p12</em> file from a location different than your app&rsquo;s main bundle you can construct an instance of <code>VerIDIdentity</code> and pass it to the <code><a href="Classes/RxVerID.html">RxVerID</a></code> initializer. This option is only available on iOS 10.3 or newer.</p>
+<pre class="highlight swift"><code><span class="k">do</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span> <span class="c1">// Set this to the URL pointing to your 'Ver-ID identity.p12' file</span>
+    <span class="k">let</span> <span class="nv">identity</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">VerIDIdentity</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">rxVerID</span> <span class="o">=</span> <span class="kt">RxVerID</span><span class="p">(</span><span class="nv">identity</span><span class="p">:</span> <span class="n">identity</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+    <span class="c1">// Failed to create Ver-ID identity</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='a-href-https-appliedrecognition-github-io-rx-ver-id-apple-classes-rxverid-html-reference-documentation-a' class='heading'><a href="https://appliedrecognition.github.io/Rx-Ver-ID-Apple/Classes/RxVerID.html">Reference documentation</a></h2>
 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/AppliedRecognition" target="_blank" rel="external">Applied Recognition, Inc.</a>. All rights reserved. (Last updated: 2020-03-03)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/AppliedRecognition" target="_blank" rel="external">Applied Recognition, Inc.</a>. All rights reserved. (Last updated: 2020-03-26)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

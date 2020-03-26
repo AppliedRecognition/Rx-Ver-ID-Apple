@@ -197,10 +197,35 @@ class RxVerIDTests: XCTestCase {
     // MARK: - Face comparison
     
     func test_compareFaceToFace_returnsScore() {
+        guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow}).first else {
+            return
+        }
         XCTAssertNoThrow(try self.facesOfUser(1).toArray()
             .flatMap { faces in
                 return self.rxVerID.compareFace(faces.first!, toFaces: [faces.last!])
             }.toBlocking().single())
+    }
+    
+    func stringFromFaceTemplate(_ template: [Float32]) -> String {
+        let floats: [CFSwappedFloat32] = template.map({ CFConvertFloat32HostToSwapped($0) })
+        var bytes: [UInt8] = []
+        for var float in floats {
+            let floatBytes = withUnsafeBytes(of: &float) { Array($0) }
+            bytes.append(contentsOf: floatBytes)
+        }
+        let data = Data(bytes)
+        return data.base64EncodedString()
+    }
+    
+    func test_rawFaceTemplates() throws {
+        let templates = try self.facesOfUser(2).flatMap({ face in
+            self.rxVerID.verid.asObservable().compactMap({ verid in
+                try (verid.faceRecognition as? VerIDFaceRecognition)?.rawFaceTemplate(fromFace: face)
+            })
+        }).toBlocking().toArray()
+        templates.forEach({ template in
+            NSLog(stringFromFaceTemplate(template.map({ $0.floatValue })))
+        })
     }
     
     // MARK: - User management

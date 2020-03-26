@@ -150,7 +150,11 @@ let rxVerID = RxVerID()
 let disposeBag = DisposeBag()
 // Create session settings
 let settings = LivenessDetectionSessionSettings()
-rxVerID.session(settings: settings)
+// Get a window in which to run the session
+guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow}).first else {
+    return
+}
+rxVerID.sessionInWindow(window, settings: settings)
     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     .observeOn(MainScheduler.instance)
     .subscribe(onSuccess: { result in

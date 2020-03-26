@@ -6,10 +6,10 @@ use_frameworks!
 target 'RxVerID' do
     pod 'RxSwift', '~> 5'
     pod 'RxCocoa', '~> 5'
-    pod 'Ver-ID-UI', '>= 1.11.1', '< 2.0'
+    pod 'Ver-ID-UI', '>= 2.0', '< 3.0'
 end
 
 target 'RxVerIDTests' do
   pod 'RxBlocking', '~> 5'
-  pod 'Ver-ID-UI', '>= 1.11.1', '< 2.0'
+  pod 'Ver-ID-UI', '>= 2.0', '< 3.0'
 end

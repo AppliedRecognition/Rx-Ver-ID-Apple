@@ -15,6 +15,7 @@ import RxSwift
 
 public enum VerIDSessionError: Error {
     case sessionFailed(result: VerIDSessionResult)
+    case methodUnavailable
 }
 
 fileprivate class SessionDelegate: VerIDSessionDelegate {
@@ -49,8 +50,9 @@ public extension RxVerID {
     /// - Returns: Maybe whose value is a session result if the session completes successfully
     /// - Note: If the session is cancelled the maybe completes without a value. If the session fails the maybe returns an error.
     /// - Since: 1.0.0
+    @available(*, unavailable)
     func session<T: VerIDSessionSettings>(settings: T) -> Maybe<VerIDSessionResult> {
-        return self.session(settings: settings, translatedStrings: TranslatedStrings())
+        return Maybe.error(VerIDSessionError.methodUnavailable)
     }
     
     /// Create and run a Ver-ID session
@@ -60,20 +62,56 @@ public extension RxVerID {
     /// - Returns: Maybe whose value is a session result if the session completes successfully
     /// - Note: If the session is cancelled the maybe completes without a value. If the session fails the maybe returns an error.
     /// - Since: 1.1.0
+    @available(*, unavailable)
     func session<T: VerIDSessionSettings>(settings: T, translatedStrings: TranslatedStrings) -> Maybe<VerIDSessionResult> {
-        return self.createSession(settings: settings, translatedStrings: translatedStrings).asMaybe().flatMap({ session in
-            self.runSession(session)
-        }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+        return Maybe.error(VerIDSessionError.methodUnavailable)
     }
     
     /// Run a Ver-ID session
     /// - Parameter session: Session to run
     /// - Since: 1.4.0
+    @available(*, unavailable)
     func runSession(_ session: VerIDSession) -> Maybe<VerIDSessionResult> {
+        return Maybe.error(VerIDSessionError.methodUnavailable)
+    }
+    
+    /// Create and run a Ver-ID session
+    /// - Parameters:
+    ///   - window: Window in which to display the session UI
+    ///   - settings: Ver-ID session settings
+    /// - Returns: Maybe whose value is a session result if the session completes successfully
+    /// - Note: If the session is cancelled the maybe completes without a value. If the session fails the maybe returns an error.
+    /// - Since: 2.0.0
+    func sessionInWindow<T: VerIDSessionSettings>(_ window: UIWindow, settings: T) -> Maybe<VerIDSessionResult> {
+        return self.sessionInWindow(window, settings: settings, translatedStrings: TranslatedStrings())
+    }
+    
+    /// Create and run a Ver-ID session
+    /// - Parameters:
+    ///   - window: Window in which to display the session UI
+    ///   - settings: Ver-ID session settings
+    ///   - translatedStrings: Translations
+    /// - Returns: Maybe whose value is a session result if the session completes successfully
+    /// - Note: If the session is cancelled the maybe completes without a value. If the session fails the maybe returns an error.
+    /// - Since: 2.0.0
+    func sessionInWindow<T: VerIDSessionSettings>(_ window: UIWindow, settings: T, translatedStrings: TranslatedStrings) -> Maybe<VerIDSessionResult> {
+        return self.createSession(settings: settings, translatedStrings: translatedStrings).asMaybe().flatMap({ session in
+            self.runSession(session, inWindow: window)
+        }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+    }
+    
+    /// Run a Ver-ID session in a window
+    /// - Parameters:
+    ///   - session: Session to run
+    ///   - window: Window in which to display the session UI
+    /// - Returns: Maybe whose value is a session result if the session completes successfully
+    /// - Note: If the session is cancelled the maybe completes without a value. If the session fails the maybe returns an error.
+    /// - Since: 2.0.0
+    func runSession(_ session: VerIDSession, inWindow window: UIWindow) -> Maybe<VerIDSessionResult> {
         return Maybe<VerIDSessionResult>.create(subscribe: { maybe in
             var delegate: SessionDelegate? = SessionDelegate(maybe)
             session.delegate = delegate
-            session.start()
+            session.startInWindow(window)
             return Disposables.create {
                 delegate = nil
             }
